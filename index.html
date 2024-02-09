@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Custom Search Engine Example</title>
+<script>
+function googleSearch(query) {
+  // Replace 'YOUR_CSE_ID' with your actual CSE ID
+  var cse_url = "https://www.googleapis.com/customsearch/v1?key=YOUR_API_KEY&cx=YOUR_CSE_ID&q=" + encodeURIComponent(query);
+  // Use fetch API or other methods to make an AJAX request
+  fetch(cse_url)
+    .then(response => response.json())
+    .then(data => {
+      // Process search results from 'data.items' array
+      var resultsHtml = "";
+      for (var i = 0; i < data.items.length; i++) {
+        resultsHtml += "<a href='" + data.items[i].link + "'>" + data.items[i].title + "</a><br>";
+      }
+      document.getElementById("search-results").innerHTML = resultsHtml;
+    })
+    .catch(error => console.error(error));
+}
+</script>
+</head>
+<body>
+<input type="text" id="search-query" placeholder="Enter search term">
+<button onclick="googleSearch(document.getElementById('search-query').value)">Search</button>
+<div id="search-results"></div>
+</body>
+</html>
